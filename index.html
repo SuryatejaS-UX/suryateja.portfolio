@@ -149,6 +149,80 @@
         .dot-active { background-color: var(--dot-active) !important; }
         .dot-inactive { background-color: var(--dot-inactive) !important; }
 
+        /* --- BUTTON STYLES --- */
+        /* Primary Button (Email Me) */
+        .btn-primary {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: #e5e7eb;
+        }
+        /* Light Mode Primary Button Override */
+        [data-theme="light"] .btn-primary {
+            background-color: #111827 !important;
+            color: #ffffff !important;
+            border: none !important;
+        }
+        [data-theme="light"] .btn-primary:hover {
+            background-color: #374151 !important;
+        }
+        /* Light Mode Icon in Primary Button */
+        [data-theme="light"] .btn-primary i {
+            color: #ffffff !important;
+        }
+
+        /* Secondary Button (Socials) */
+        .btn-secondary {
+            background-color: #1f2937; /* gray-800 */
+            color: #ffffff;
+            border: 1px solid #374151; /* gray-700 */
+            transition: all 0.2s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #374151;
+        }
+        /* Light Mode Secondary Button Override */
+        [data-theme="light"] .btn-secondary {
+            background-color: #ffffff !important;
+            color: #111827 !important;
+            border-color: #d1d5db !important;
+        }
+        [data-theme="light"] .btn-secondary:hover {
+            background-color: #f3f4f6 !important;
+            border-color: #9ca3af !important;
+        }
+        [data-theme="light"] .btn-secondary i {
+            color: #111827 !important;
+        }
+
+        /* Outline Button (Read on Medium) */
+        .btn-outline {
+            background-color: transparent;
+            color: #ffffff;
+            border: 1px solid #4b5563; /* gray-600 */
+            transition: all 0.2s ease;
+        }
+        .btn-outline:hover {
+            background-color: #1f2937;
+            border-color: #ffffff;
+        }
+        /* Light Mode Outline Button Override */
+        [data-theme="light"] .btn-outline {
+            color: #111827 !important;
+            border-color: #4b5563 !important;
+        }
+        [data-theme="light"] .btn-outline:hover {
+            background-color: #111827 !important;
+            color: #ffffff !important;
+            border-color: #111827 !important;
+        }
+        [data-theme="light"] .btn-outline i {
+            color: inherit !important;
+        }
+
         /* Modal */
         #project-modal .bg-\[\#1c1c1e\] { background-color: var(--modal-bg) !important; }
         .modal-close-btn { 
@@ -339,13 +413,13 @@
             </div>
 
             <div class="flex flex-wrap gap-3 z-10">
-                <a href="javascript:void(0)" onclick="copyEmail()" class="px-6 py-2.5 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors flex items-center gap-2 border border-gray-700">
-                    <i class="fa-solid fa-envelope"></i> Email Me
+                <a href="javascript:void(0)" onclick="copyEmail()" class="btn-primary px-6 py-2.5 rounded-full font-semibold flex items-center gap-2">
+                    <i class="fa-solid fa-envelope"></i> Email
                 </a>
-                <a href="https://www.linkedin.com/in/suryatejashankapally/" target="_blank" class="px-6 py-2.5 bg-gray-800 text-white border border-gray-700 font-semibold rounded-full hover:bg-gray-700 transition-colors flex items-center gap-2">
+                <a href="https://www.linkedin.com/in/suryatejashankapally/" target="_blank" class="btn-secondary px-6 py-2.5 rounded-full font-semibold flex items-center gap-2">
                     <i class="fa-brands fa-linkedin"></i> LinkedIn
                 </a>
-                <a href="#" class="px-4 py-2.5 bg-gray-800 text-white border border-gray-700 font-semibold rounded-full hover:bg-gray-700 transition-colors" title="Download Resume">
+                <a href="#" class="btn-secondary px-4 py-2.5 rounded-full font-semibold" title="Download Resume">
                     <i class="fa-solid fa-file-arrow-down"></i>
                 </a>
             </div>
@@ -640,14 +714,14 @@
             <p class="text-gray-400 mb-8 max-w-xl mx-auto">I'm currently open to UX Designer opportunities where I can apply my skills in Gen AI and enterprise systems.</p>
             
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                <a href="javascript:void(0)" onclick="copyEmail()" class="w-full sm:w-auto px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 border border-gray-700">
+                <a href="javascript:void(0)" onclick="copyEmail()" class="btn-primary w-full sm:w-auto px-8 py-3 rounded-full font-bold flex items-center justify-center gap-2">
                     <i class="fa-solid fa-envelope"></i> Connect via Email
                 </a>
                 <div class="flex gap-4">
-                    <a href="https://www.linkedin.com/in/suryatejashankapally/" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 border border-gray-700 text-white hover:bg-gray-700 hover:scale-110 transition-all">
+                    <a href="https://www.linkedin.com/in/suryatejashankapally/" target="_blank" class="btn-secondary w-12 h-12 flex items-center justify-center rounded-full">
                         <i class="fa-brands fa-linkedin-in"></i>
                     </a>
-                    <a href="https://www.behance.net/SuryaTejaShankapally" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 border border-gray-700 text-white hover:bg-gray-700 hover:scale-110 transition-all">
+                    <a href="https://www.behance.net/SuryaTejaShankapally" target="_blank" class="btn-secondary w-12 h-12 flex items-center justify-center rounded-full">
                         <i class="fa-brands fa-behance"></i>
                     </a>
                 </div>
@@ -707,11 +781,11 @@
                  <span id="modal-confidential-text" class="text-xs text-gray-600">Confidential Project • TCS</span>
                  
                  <!-- New External Link Button -->
-                 <a id="modal-external-link" href="#" target="_blank" class="hidden px-6 py-2.5 border border-gray-600 text-white font-semibold rounded-full hover:bg-gray-800 transition-colors text-sm items-center gap-2">
+                 <a id="modal-external-link" href="#" target="_blank" class="hidden btn-outline px-6 py-2.5 rounded-full font-semibold text-sm items-center gap-2">
                     Read on Medium <i class="fa-solid fa-arrow-up-right-from-square"></i>
                  </a>
 
-                 <a id="modal-action-btn" href="#" class="ml-auto px-6 py-2.5 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors inline-flex items-center gap-2 text-sm border border-transparent">
+                 <a id="modal-action-btn" href="#" class="ml-auto btn-primary px-6 py-2.5 rounded-full font-semibold inline-flex items-center gap-2 text-sm">
                     Next Project <i class="fa-solid fa-arrow-right"></i>
                  </a>
             </div>
