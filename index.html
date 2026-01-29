@@ -104,6 +104,9 @@
         [data-theme="light"] .bg-indigo-900\/50 { background-color: #e0e7ff !important; border: none !important; }
         [data-theme="light"] .bg-blue-900\/30 { background-color: #dbeafe !important; border: none !important; }
         
+        /* Profile Avatar Background in Light Mode */
+        [data-theme="light"] .bg-gray-700 { background-color: #e5e7eb !important; }
+
         /* Fix the Featured Project Gradient in Light Mode */
         /* Changes black fade to white fade so text stays readable */
         [data-theme="light"] .absolute.inset-0.bg-gradient-to-t {
@@ -526,7 +529,7 @@
                         "I've worked with Surya and found him to be a reliable and thoughtful designer. He approaches design with curiosity, takes feedback positively, and consistently delivers well-considered solutions. Surya collaborates well with teams and shows strong ownership in his work. I'm confident he'll continue to grow and add value wherever he works."
                     </blockquote>
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-white shrink-0">AB</div>
+                        <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-xs font-bold text-white shrink-0">AB</div>
                         <div>
                             <div class="text-white font-semibold text-sm">Ankit Biswal</div>
                             <div class="text-blue-400 text-xs">Senior UX Designer, TCS</div>
@@ -539,7 +542,7 @@
                         "The design system Surya built unified our fragmented products. He thinks in systems, not just screens."
                     </blockquote>
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-white shrink-0">DC</div>
+                        <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-xs font-bold text-white shrink-0">DC</div>
                         <div>
                             <div class="text-white font-semibold text-sm">David Chen</div>
                             <div class="text-blue-400 text-xs">Engineering Lead</div>
@@ -552,7 +555,7 @@
                         "Incredibly detail-oriented. He spotted usability issues in our claims portal that our entire team had missed."
                     </blockquote>
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-white shrink-0">SJ</div>
+                        <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-xs font-bold text-white shrink-0">SJ</div>
                         <div>
                             <div class="text-white font-semibold text-sm">Sarah Jenkins</div>
                             <div class="text-blue-400 text-xs">Client, Banking</div>
@@ -702,7 +705,15 @@
             <!-- Modal Footer -->
             <div class="p-6 md:p-8 border-t border-gray-800 bg-[#1c1c1e] rounded-none md:rounded-b-3xl flex justify-between items-center pb-8 safe-area-inset-bottom">
                  <span id="modal-confidential-text" class="text-xs text-gray-600">Confidential Project • TCS</span>
-                 <a id="modal-action-btn" href="#" class="ml-auto px-6 py-2.5 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors inline-block text-sm">Close View</a>
+                 
+                 <!-- New External Link Button -->
+                 <a id="modal-external-link" href="#" target="_blank" class="hidden px-6 py-2.5 border border-gray-600 text-white font-semibold rounded-full hover:bg-gray-800 transition-colors text-sm items-center gap-2">
+                    Read on Medium <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                 </a>
+
+                 <a id="modal-action-btn" href="#" class="ml-auto px-6 py-2.5 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors inline-flex items-center gap-2 text-sm border border-transparent">
+                    Next Project <i class="fa-solid fa-arrow-right"></i>
+                 </a>
             </div>
         </div>
     </div>
@@ -986,6 +997,9 @@
             modal.classList.remove('opacity-0', 'pointer-events-none');
             modal.classList.add('modal-open');
             document.body.style.overflow = 'hidden';
+            
+            // Hide theme toggle when modal is open to prevent overlap on mobile
+            document.querySelector('.theme-toggle').style.display = 'none';
         }
 
         function navigateProject(direction) {
@@ -1014,35 +1028,42 @@
             // Inject the FULL RICH CONTENT
             document.getElementById('modal-content-area').innerHTML = project.fullContent;
 
-            // Handle Confidential Text Visibility
+            // Handle Confidential Text & External Link Visibility
             const confidentialText = document.getElementById('modal-confidential-text');
-            if (project.link) {
-                confidentialText.style.display = 'none';
-            } else {
-                confidentialText.style.display = 'block';
-            }
+            const externalLinkBtn = document.getElementById('modal-external-link');
 
             if (project.link) {
-                modalActionBtn.textContent = "Read on Medium";
-                modalActionBtn.href = project.link;
-                modalActionBtn.target = "_blank";
-                modalActionBtn.onclick = null;
-                modalActionBtn.innerHTML = 'Read on Medium <i class="fa-solid fa-arrow-up-right-from-square ml-2"></i>';
+                // External Article
+                confidentialText.style.display = 'none';
+                externalLinkBtn.style.display = 'inline-flex';
+                externalLinkBtn.href = project.link;
+                
+                // Update "Read on Medium" text if needed (e.g. if we add different external link types later)
+                // For now hardcoded in HTML as "Read on Medium"
+                
             } else {
-                modalActionBtn.textContent = "Close View";
-                modalActionBtn.href = "#";
-                modalActionBtn.target = "";
-                modalActionBtn.onclick = (e) => {
-                    e.preventDefault();
-                    closeModal();
-                };
+                // Internal Project
+                confidentialText.style.display = 'block';
+                externalLinkBtn.style.display = 'none';
             }
+
+            // Always "Next Project" functionality on the right button
+            modalActionBtn.innerHTML = 'Next Project <i class="fa-solid fa-arrow-right"></i>';
+            modalActionBtn.href = "#";
+            modalActionBtn.target = "";
+            modalActionBtn.onclick = (e) => {
+                e.preventDefault();
+                navigateProject(1);
+            };
         }
 
         function closeModal() {
             modal.classList.remove('modal-open');
             modal.classList.add('opacity-0', 'pointer-events-none');
             document.body.style.overflow = 'auto';
+            
+            // Restore theme toggle visibility
+            document.querySelector('.theme-toggle').style.display = 'flex';
         }
 
         document.addEventListener('keydown', (e) => {
