@@ -34,6 +34,8 @@
             --modal-nav-icon: rgba(255, 255, 255, 0.5);
             --modal-nav-icon-hover: #ffffff;
             --modal-divider: #374151;
+            --modal-placeholder-bg: #1f2937;
+            --modal-placeholder-border: #374151;
         }
 
         [data-theme="light"] {
@@ -60,6 +62,8 @@
             --modal-nav-icon: rgba(0, 0, 0, 0.3);
             --modal-nav-icon-hover: #000000;
             --modal-divider: #e5e7eb;
+            --modal-placeholder-bg: #f9fafb;
+            --modal-placeholder-border: #e5e7eb;
         }
 
         body {
@@ -266,6 +270,12 @@
             padding-left: 1.5rem;
             margin-bottom: 1.5rem;
         }
+
+        .case-study-content ol {
+            list-style-type: decimal;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
         
         .case-study-content li {
             margin-bottom: 0.5rem;
@@ -287,6 +297,36 @@
         .case-study-content hr {
             border-color: var(--modal-divider);
             margin: 2rem 0;
+        }
+
+        /* Image Placeholder in Modal */
+        .img-placeholder {
+            width: 100%;
+            height: 16rem; /* h-64 */
+            background-color: var(--modal-placeholder-bg);
+            border: 1px dashed var(--modal-placeholder-border);
+            border-radius: 0.75rem; /* rounded-xl */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-tertiary);
+            margin-bottom: 2rem;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+        .img-placeholder:hover {
+            border-color: var(--text-secondary);
+            background-color: var(--icon-bg);
+        }
+        .img-placeholder i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.5;
+        }
+        .img-placeholder span {
+            font-size: 0.875rem;
+            font-weight: 500;
         }
 
         /* Meta Data Grid in Modal */
@@ -393,13 +433,13 @@
     <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-4 auto-rows-min gap-4 md:gap-6">
 
         <!-- 1. Top Section (Hero) -->
-        <div class="animate-enter bento-card rounded-3xl p-6 md:p-8 col-span-1 md:col-span-2 row-span-2 flex flex-col justify-between relative overflow-hidden group">
+        <div class="animate-enter bento-card rounded-3xl p-6 md:p-8 col-span-1 md:col-span-2 row-span-2 flex flex-col justify-center relative overflow-hidden group">
             <div class="absolute inset-0 bg-pattern z-0"></div>
             
-            <div class="z-10">
+            <div class="z-10 flex flex-col justify-center h-full">
                 <div class="flex items-center gap-4 mb-6">
                     <div class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-gray-700 shadow-lg shrink-0">
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Christopher&backgroundColor=b6e3f4" alt="Surya Teja" class="w-full h-full object-cover">
+                        <img src="https://api.dicebear.com/9.x/notionists/svg?seed=Felix&backgroundColor=b6e3f4" alt="Surya Teja" class="w-full h-full object-cover">
                     </div>
                     <div>
                         <h1 class="text-3xl md:text-4xl font-bold text-white tracking-tight">Surya Teja</h1>
@@ -407,58 +447,72 @@
                     </div>
                 </div>
 
-                <p class="text-gray-300 text-lg md:text-xl leading-relaxed mb-8">
-                    Designing thoughtful user experiences across <span class="text-white font-semibold">Generative AI</span>, <span class="text-white font-semibold">Banking</span>, <span class="text-white font-semibold">Sustainability</span>, and <span class="text-white font-semibold">Insurance</span>.
-                </p>
-            </div>
+                <div class="mb-8">
+                    <h2 class="text-white text-3xl md:text-4xl font-bold leading-tight mb-3">
+                        Designing clear, scalable UX for complex enterprise and AI-driven workflows.
+                    </h2>
+                    <p class="text-gray-400 text-base md:text-lg leading-relaxed">
+                        Focused on reducing cognitive load, streamlining decision paths, and building reusable systems for real-world constraints.
+                    </p>
+                </div>
 
-            <div class="flex flex-wrap gap-3 z-10">
-                <a href="javascript:void(0)" onclick="copyEmail()" class="btn-primary px-6 py-2.5 rounded-full font-semibold flex items-center gap-2">
-                    <i class="fa-solid fa-envelope"></i> Email
-                </a>
-                <a href="https://www.linkedin.com/in/suryatejashankapally/" target="_blank" class="btn-secondary px-6 py-2.5 rounded-full font-semibold flex items-center gap-2">
-                    <i class="fa-brands fa-linkedin"></i> LinkedIn
-                </a>
-                <a href="#" class="btn-secondary px-4 py-2.5 rounded-full font-semibold" title="Download Resume">
-                    <i class="fa-solid fa-file-arrow-down"></i>
-                </a>
+                <div class="flex flex-wrap gap-3">
+                    <a href="javascript:void(0)" onclick="copyEmail()" class="btn-primary px-6 py-2.5 rounded-full font-semibold flex items-center gap-2">
+                        <i class="fa-solid fa-envelope"></i> Email
+                    </a>
+                    <a href="https://www.linkedin.com/in/suryatejashankapally/" target="_blank" class="btn-secondary px-6 py-2.5 rounded-full font-semibold flex items-center gap-2">
+                        <i class="fa-brands fa-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="#" class="btn-secondary px-4 py-2.5 rounded-full font-semibold" title="Download Resume">
+                        <i class="fa-solid fa-file-arrow-down"></i>
+                    </a>
+                </div>
             </div>
         </div>
 
         <!-- 2. About Me -->
         <div class="animate-enter delay-100 bento-card rounded-3xl p-6 md:p-8 col-span-1 md:col-span-2 flex flex-col justify-center bg-gradient-to-br from-[#1c1c1e] to-[#252528]">
-            <h2 class="text-xl font-bold mb-3 text-gray-200 flex items-center gap-2">
-                <i class="fa-solid fa-user-astronaut text-purple-400"></i> Philosophy
+            <h2 class="text-xl font-bold mb-4 text-gray-200 flex items-center gap-2">
+                <!-- i class="fa-solid fa-brain text-purple-400"></i>--> Philosophy
             </h2>
-            <p class="text-gray-400 leading-relaxed">
-                I believe in simplifying complex workflows into intuitive experiences. At <span class="text-white">TCS</span>, I’ve worked on scalable design systems, generative AI applications, and productivity tools for enterprise users, proving that B2B software doesn't have to be boring.
-            </p>
+            <div class="space-y-4 text-gray-400 text-sm leading-relaxed">
+                <p>I design for clarity in complex systems. Most of my work involves enterprise and AI-driven products where users deal with long workflows, legacy constraints, and high cognitive load.</p>
+                <p>I focus on simplifying decision paths, standardizing interactions, and reducing unnecessary steps so users can complete tasks confidently and efficiently.</p>
+                <p>My approach balances user needs, business goals, and technical realities, especially in environments where scalability, reusability, and consistency matter more than visual novelty.</p>
+            </div>
         </div>
 
         <!-- 3. Skills Snapshot -->
         <div class="animate-enter delay-200 bento-card rounded-3xl p-6 col-span-1 md:col-span-2 row-span-1">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-gray-200">Skills & Tools</h2>
-                <i class="fa-solid fa-layer-group text-blue-400"></i>
-            </div>
-            
-            <div class="space-y-4">
-                <div>
-                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Design</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Group 1: Core UX -->
+                <div class="md:col-span-2">
+                    <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Core UX Strengths</h2>
                     <div class="flex flex-wrap gap-2">
-                        <span class="skill-tag px-3 py-1 rounded-md text-sm text-gray-300">User Research</span>
-                        <span class="skill-tag px-3 py-1 rounded-md text-sm text-gray-300">Wireframing</span>
-                        <span class="skill-tag px-3 py-1 rounded-md text-sm text-gray-300">Prototyping</span>
-                        <span class="skill-tag px-3 py-1 rounded-md text-sm text-gray-300">Visual Design</span>
+                        <span class="skill-tag px-3 py-1 rounded-md text-sm">User flows & journey mapping</span>
+                        <span class="skill-tag px-3 py-1 rounded-md text-sm">Interaction design for complex workflows</span>
+                        <span class="skill-tag px-3 py-1 rounded-md text-sm">Enterprise UX & internal tools</span>
+                        <span class="skill-tag px-3 py-1 rounded-md text-sm">Workflow optimization</span>
                     </div>
                 </div>
+                
+                <!-- Group 2: Supporting -->
                 <div>
-                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Tech & Domain</p>
+                    <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Supporting Skills</h2>
                     <div class="flex flex-wrap gap-2">
-                        <span class="skill-tag px-3 py-1 rounded-md text-sm text-gray-300">Figma</span>
-                        <span class="skill-tag px-3 py-1 rounded-md text-sm text-gray-300">Adobe XD</span>
-                        <span class="skill-tag px-3 py-1 rounded-md text-sm text-gray-300">Generative AI</span>
-                        <span class="skill-tag px-3 py-1 rounded-md text-sm text-gray-300">FinTech</span>
+                        <span class="skill-tag px-3 py-1 rounded-md text-sm">User research</span>
+                        <span class="skill-tag px-3 py-1 rounded-md text-sm">Wireframing</span>
+                        <span class="skill-tag px-3 py-1 rounded-md text-sm">Visual design</span>
+                    </div>
+                </div>
+
+                <!-- Group 3: Tools & Domains -->
+                <div>
+                    <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Tools & Domains</h2>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-1 rounded-md text-sm">Figma & FigJam</span>
+                        <span class="skill-tag px-3 py-1 rounded-md text-sm">GenAI Interfaces</span>
+                        <span class="skill-tag px-3 py-1 rounded-md text-sm">Sustainability</span>
                     </div>
                 </div>
             </div>
@@ -466,8 +520,8 @@
 
         <!-- PROJECT GRID SECTION -->
         
-        <!-- 4. Case Study: Gen AI -->
-        <div onclick="openProject('genai')" class="animate-enter delay-300 cursor-pointer bento-card rounded-3xl p-0 col-span-1 md:col-span-2 row-span-2 group block relative overflow-hidden">
+        <!-- 4. Featured Case Study: Sustainability -->
+        <div onclick="openProject('sustainability')" class="animate-enter delay-300 cursor-pointer bento-card rounded-3xl p-0 col-span-1 md:col-span-2 row-span-2 group block relative overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent z-10"></div>
             <div class="absolute inset-0 bg-gray-800 z-0">
                  <svg class="w-full h-full opacity-20 group-hover:opacity-30 transition-opacity duration-500" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -478,15 +532,15 @@
             
             <div class="relative z-20 p-6 md:p-8 h-full flex flex-col justify-end">
                 <div class="mb-4">
-                    <span class="bg-blue-500/20 text-blue-300 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Featured Project</span>
+                    <span class="bg-blue-500/20 text-blue-300 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Case Study</span>
                 </div>
-                <h3 class="text-2xl md:text-3xl font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">Generative AI Design Tool</h3>
-                <p class="text-gray-300 mb-4 line-clamp-2">Streamlining the artifact editing & sharing flow for enterprise users. A deep dive into prompt refinement UI.</p>
+                <h3 class="text-2xl md:text-3xl font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">Vendor Sustainability Portal</h3>
+                <p class="text-gray-300 mb-4 line-clamp-2">Reducing cognitive load in a 400+ question compliance workflow using workflow UX and agentic assistance.</p>
                 
                 <div class="grid grid-cols-2 gap-4 mt-2 border-t border-gray-700 pt-4">
                     <div>
                         <p class="text-xs text-gray-500 uppercase">Impact</p>
-                        <p class="text-white font-semibold">Reduced clicks by 40%</p>
+                        <p class="text-white font-semibold">Faster Completion</p>
                     </div>
                     <div>
                         <p class="text-xs text-gray-500 uppercase">Role</p>
@@ -495,63 +549,75 @@
                 </div>
                 
                 <div class="mt-4 flex items-center text-blue-400 font-medium text-sm group-hover:translate-x-2 transition-transform">
-                    View Case Study <i class="fa-solid fa-arrow-right ml-2"></i>
+                    View Full Case Study <i class="fa-solid fa-arrow-right ml-2"></i>
                 </div>
             </div>
         </div>
 
-        <!-- 4b. Case Study: Field Officer App POC -->
+        <!-- 4b. Field Officer App POC -->
         <div onclick="openProject('fieldofficer')" class="animate-enter delay-400 cursor-pointer bento-card rounded-3xl p-6 col-span-1 md:col-span-1 group block flex flex-col justify-between">
-            <div>
-                <div class="w-10 h-10 rounded-full bg-green-900/50 flex items-center justify-center mb-4 text-green-400 font-bold">
-                    <i class="fa-solid fa-map-location-dot"></i>
+            <div class="flex items-start justify-between">
+                <div>
+                    <div class="w-10 h-10 rounded-full bg-green-900/50 flex items-center justify-center mb-4 text-green-400 font-bold">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Field Officer App</h3>
+                    <p class="text-sm text-gray-400">Offline-first mobile tool for on-ground data collection.</p>
                 </div>
-                <h3 class="text-lg font-bold text-white mb-2">Field Officer App</h3>
-                <p class="text-sm text-gray-400">Offline-first mobile tool for on-ground data collection.</p>
+                <div class="bg-gray-800 text-gray-400 text-[10px] px-2 py-1 rounded border border-gray-700">Internal Tool <i class="fa-solid fa-lock text-[8px] ml-1"></i></div>
             </div>
             <div class="mt-4 pt-4 border-t border-gray-800">
                 <p class="text-green-400 font-bold text-sm">Sync Efficiency</p>
             </div>
         </div>
 
-        <!-- 4c. Case Study: API Registration -->
+        <!-- 4c. API Registration -->
         <div onclick="openProject('apiregistration')" class="animate-enter delay-400 cursor-pointer bento-card rounded-3xl p-6 col-span-1 md:col-span-1 group block flex flex-col justify-between">
-            <div>
-                <div class="w-10 h-10 rounded-full bg-pink-900/50 flex items-center justify-center mb-4 text-pink-400 font-bold">
-                    <i class="fa-solid fa-network-wired"></i>
+            <div class="flex items-start justify-between">
+                <div>
+                    <div class="w-10 h-10 rounded-full bg-pink-900/50 flex items-center justify-center mb-4 text-pink-400 font-bold">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">API Platform</h3>
+                    <p class="text-sm text-gray-400">Register, configure, and consume APIs within decision strategies.</p>
                 </div>
-                <h3 class="text-lg font-bold text-white mb-2">API Platform</h3>
-                <p class="text-sm text-gray-400">Register, configure, and consume APIs within decision strategies.</p>
+                <div class="bg-gray-800 text-gray-400 text-[10px] px-2 py-1 rounded border border-gray-700">Internal Tool <i class="fa-solid fa-lock text-[8px] ml-1"></i></div>
             </div>
             <div class="mt-4 pt-4 border-t border-gray-800">
                 <p class="text-pink-400 font-bold text-sm">Low-Code Integration</p>
             </div>
         </div>
 
-        <!-- 4d. Case Study: Micro Usability -->
+        <!-- 4d. Micro Usability -->
         <div onclick="openProject('microusability')" class="animate-enter delay-500 cursor-pointer bento-card rounded-3xl p-6 col-span-1 md:col-span-1 group block flex flex-col justify-between relative overflow-hidden">
             <i class="fa-brands fa-medium absolute -right-4 -top-4 text-8xl text-white opacity-5 pointer-events-none"></i>
-            <div>
-                <div class="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center mb-4 border border-gray-200">
-                    <i class="fa-brands fa-medium-m"></i>
+            <div class="flex items-start justify-between">
+                <div>
+                    <div class="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center mb-4 border border-gray-200">
+                        <i class="fa-brands fa-medium-m"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Micro Usability</h3>
+                    <p class="text-sm text-gray-400">Why small usability problems deserve macro attention.</p>
                 </div>
-                <h3 class="text-lg font-bold text-white mb-2">Micro Usability</h3>
-                <p class="text-sm text-gray-400">Why small usability problems deserve macro attention.</p>
+                <div class="bg-gray-800 text-gray-400 text-[10px] px-2 py-1 rounded border border-gray-700">Article</div>
             </div>
             <div class="mt-4 pt-4 border-t border-gray-800 flex justify-between items-center">
-                <p class="text-white font-bold text-sm">Article</p>
+                <p class="text-white font-bold text-sm">Friction Reduction</p>
                 <i class="fa-solid fa-arrow-up-right-from-square text-xs text-gray-500"></i>
             </div>
         </div>
 
-        <!-- 4e. Case Study: Custom Action Creator -->
+        <!-- 4e. Custom Action Creator -->
         <div onclick="openProject('customaction')" class="animate-enter delay-500 cursor-pointer bento-card rounded-3xl p-6 col-span-1 md:col-span-1 group block flex flex-col justify-between">
-            <div>
-                <div class="w-10 h-10 rounded-full bg-indigo-900/50 flex items-center justify-center mb-4 text-indigo-400 font-bold">
-                    <i class="fa-solid fa-gears"></i>
+            <div class="flex items-start justify-between">
+                <div>
+                    <div class="w-10 h-10 rounded-full bg-indigo-900/50 flex items-center justify-center mb-4 text-indigo-400 font-bold">
+                        <i class="fa-solid fa-gears"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Custom Actions</h3>
+                    <p class="text-sm text-gray-400">Safe JSON configuration for non-devs.</p>
                 </div>
-                <h3 class="text-lg font-bold text-white mb-2">Custom Action Creator</h3>
-                <p class="text-sm text-gray-400">Safe JSON configuration for non-devs.</p>
+                <div class="bg-gray-800 text-gray-400 text-[10px] px-2 py-1 rounded border border-gray-700">Internal Tool <i class="fa-solid fa-lock text-[8px] ml-1"></i></div>
             </div>
             <div class="mt-4 pt-4 border-t border-gray-800">
                 <p class="text-indigo-400 font-bold text-sm">Zero Runtime Errors</p>
@@ -563,7 +629,6 @@
             <h2 class="text-xl font-bold text-gray-200 mb-6 flex items-center gap-2">
                 <i class="fa-solid fa-briefcase text-yellow-500"></i> Experience
             </h2>
-            
             <div class="relative pl-6 border-l border-gray-700 timeline-line space-y-8">
                 <!-- Role 1 -->
                 <div class="relative">
@@ -575,7 +640,6 @@
                     <p class="text-blue-400 text-sm font-medium mb-2">Tata Consultancy Services (TCS)</p>
                     <p class="text-gray-400 text-sm">Leading design for GenAI initiatives. Improved output refinement workflows and established core design patterns for banking clients.</p>
                 </div>
-
                 <!-- Role 2 -->
                 <div class="relative">
                     <div class="absolute -left-[29px] top-1 w-4 h-4 rounded-full bg-gray-600 border-4 border-gray-800"></div>
@@ -589,47 +653,44 @@
             </div>
         </div>
 
-        <!-- 6. Social Proof / Testimonials Carousel -->
-        <div class="animate-enter delay-600 bento-card rounded-3xl p-6 md:p-8 col-span-1 md:col-span-2 flex flex-col justify-center relative overflow-hidden">
+        <!-- 6. Social Proof (Reduced Visual Weight) -->
+        <div class="animate-enter delay-600 bento-card rounded-3xl p-6 md:p-8 col-span-1 md:col-span-2 flex flex-col justify-center relative overflow-hidden bg-opacity-50">
             <div class="flex items-center gap-2 mb-6 z-10 relative">
-                <i class="fa-solid fa-quote-left text-blue-500 text-xl"></i>
-                <h2 class="text-xl font-bold text-gray-200">What People Say</h2>
+                <i class="fa-solid fa-quote-left text-gray-500 text-xl"></i>
+                <h2 class="text-xl font-bold text-gray-200">Testimonials</h2>
             </div>
-            
             <div class="relative min-h-[350px] md:min-h-[260px] testimonial-wrapper">
-                <!-- Testimonial 1 -->
                 <div id="t-1" class="testimonial-slide active flex flex-col justify-center h-full">
-                    <blockquote class="text-gray-300 italic text-base md:text-lg leading-relaxed mb-6">
-                        "I've worked with Surya and found him to be a reliable and thoughtful designer. He approaches design with curiosity, takes feedback positively, and consistently delivers well-considered solutions. Surya collaborates well with teams and shows strong ownership in his work. I'm confident he'll continue to grow and add value wherever he works."
+                    <blockquote class="text-gray-400 italic text-base md:text-lg leading-relaxed mb-6">
+                        "I've worked with Surya and found him to be a reliable and thoughtful designer. He approaches design with curiosity, takes feedback positively, and consistently delivers well-considered solutions. Surya collaborates well with teams and shows strong ownership in his work."
                     </blockquote>
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-xs font-bold text-white shrink-0">AB</div>
+                        <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-xs font-bold text-white shrink-0">AB</div>
                         <div>
                             <div class="text-white font-semibold text-sm">Ankit Biswal</div>
                             <div class="text-blue-400 text-xs">Senior UX Designer, TCS</div>
                         </div>
                     </div>
                 </div>
-                <!-- Testimonial 2 -->
+                <!-- ... other testimonials ... -->
                 <div id="t-2" class="testimonial-slide flex flex-col justify-center h-full">
-                    <blockquote class="text-gray-300 italic text-base md:text-lg leading-relaxed mb-6">
+                    <blockquote class="text-gray-400 italic text-base md:text-lg leading-relaxed mb-6">
                         "The design system Surya built unified our fragmented products. He thinks in systems, not just screens."
                     </blockquote>
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-xs font-bold text-white shrink-0">DC</div>
+                        <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-xs font-bold text-white shrink-0">DC</div>
                         <div>
                             <div class="text-white font-semibold text-sm">David Chen</div>
                             <div class="text-blue-400 text-xs">Engineering Lead</div>
                         </div>
                     </div>
                 </div>
-                <!-- Testimonial 3 -->
                 <div id="t-3" class="testimonial-slide flex flex-col justify-center h-full">
-                    <blockquote class="text-gray-300 italic text-base md:text-lg leading-relaxed mb-6">
+                    <blockquote class="text-gray-400 italic text-base md:text-lg leading-relaxed mb-6">
                         "Incredibly detail-oriented. He spotted usability issues in our claims portal that our entire team had missed."
                     </blockquote>
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-xs font-bold text-white shrink-0">SJ</div>
+                        <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-xs font-bold text-white shrink-0">SJ</div>
                         <div>
                             <div class="text-white font-semibold text-sm">Sarah Jenkins</div>
                             <div class="text-blue-400 text-xs">Client, Banking</div>
@@ -637,8 +698,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Dots -->
             <div class="flex gap-2 mt-4 z-10 relative">
                 <button onclick="showTestimonial(1)" class="w-2 h-2 rounded-full dot-active transition-opacity" id="dot-1"></button>
                 <button onclick="showTestimonial(2)" class="w-2 h-2 rounded-full dot-inactive hover:opacity-75 transition-opacity" id="dot-2"></button>
@@ -652,7 +711,7 @@
                 <i class="fa-solid fa-certificate text-yellow-400"></i> Certifications
             </h2>
             <div class="space-y-4">
-                <div class="bg-gray-800/50 p-4 rounded-xl border border-gray-700 font-semibold flex items-center gap-3">
+                <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 font-semibold flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full bg-blue-900/30 flex items-center justify-center text-blue-400 shrink-0">
                         <i class="fa-brands fa-google"></i>
                     </div>
@@ -661,7 +720,7 @@
                         <div class="text-xs text-gray-400">Professional Certificate</div>
                     </div>
                 </div>
-                <div class="bg-gray-800/50 p-4 rounded-xl border border-gray-700 font-semibold flex items-center gap-3">
+                <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 font-semibold flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full bg-blue-900/30 flex items-center justify-center text-blue-400 shrink-0">
                         <i class="fa-solid fa-building"></i>
                     </div>
@@ -678,9 +737,7 @@
             <h2 class="text-xl font-bold text-gray-200 mb-6 flex items-center gap-2">
                 <i class="fa-solid fa-graduation-cap text-pink-400"></i> Education
             </h2>
-            
             <div class="relative pl-6 border-l border-gray-700 timeline-line space-y-8">
-                <!-- Education 1: B.Tech -->
                 <div class="relative">
                     <div class="absolute -left-[29px] top-1 w-4 h-4 rounded-full bg-pink-500 border-4 border-gray-800"></div>
                     <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
@@ -688,12 +745,10 @@
                         <span class="text-sm text-gray-500 font-mono">2018 – 2021</span>
                     </div>
                     <p class="text-gray-400 text-sm mb-2">JNTU Hyderabad</p>
-                    <p class="text-xs text-gray-500 leading-relaxed">
+                    <!-- p class="text-xs text-gray-500 leading-relaxed">
                         Foundation in systems thinking and structural design principles.
-                    </p>
+                    </p> -->
                 </div>
-
-                <!-- Education 2: Diploma -->
                 <div class="relative">
                     <div class="absolute -left-[29px] top-1 w-4 h-4 rounded-full bg-gray-600 border-4 border-gray-800"></div>
                     <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
@@ -701,9 +756,9 @@
                         <span class="text-sm text-gray-500 font-mono">2015 – 2018</span>
                     </div>
                     <p class="text-gray-500 text-sm mb-2">SBTET</p>
-                    <p class="text-xs text-gray-500 leading-relaxed">
+                    <!-- <p class="text-xs text-gray-500 leading-relaxed">
                         Technical education focused on engineering fundamentals and drafting.
-                    </p>
+                    </p> -->
                 </div>
             </div>
         </div>
@@ -778,7 +833,8 @@
             
             <!-- Modal Footer -->
             <div class="p-6 md:p-8 border-t border-gray-800 bg-[#1c1c1e] rounded-none md:rounded-b-3xl flex justify-between items-center pb-8 safe-area-inset-bottom">
-                 <span id="modal-confidential-text" class="text-xs text-gray-600">Confidential Project • TCS</span>
+                 <!-- Removed Confidential Text as requested -->
+                 <span id="modal-confidential-text" class="hidden"></span>
                  
                  <!-- New External Link Button -->
                  <a id="modal-external-link" href="#" target="_blank" class="hidden btn-outline px-6 py-2.5 rounded-full font-semibold text-sm items-center gap-2">
@@ -824,36 +880,122 @@
 
         // --- FULLY RICH CONTENT PROJECT DATA ---
         const projects = {
-            'genai': {
-                title: "Generative AI Design Tool",
-                tag: "Generative AI",
+            'sustainability': {
+                title: "Vendor Sustainability Assessment Portal",
+                tag: "Sustainability / Workflow",
+                ctaText: "View Demo", // Updated CTA Text
+                link: "#", 
                 fullContent: `
                     <div class="meta-grid">
-                        <div><span class="meta-label">Role</span><div class="meta-value">Lead Designer</div></div>
-                        <div><span class="meta-label">Context</span><div class="meta-value">Internal Tool</div></div>
-                        <div><span class="meta-label">Duration</span><div class="meta-value">4 Months</div></div>
-                        <div><span class="meta-label">Impact</span><div class="meta-value">-40% Clicks</div></div>
+                        <div><span class="meta-label">Role</span><div class="meta-value">Lead UX Designer</div></div>
+                        <div><span class="meta-label">Team</span><div class="meta-value">Product & Design</div></div>
+                        <div><span class="meta-label">Focus</span><div class="meta-value">Workflow Optimization</div></div>
+                        <div><span class="meta-label">Result</span><div class="meta-value">Reduced Fatigue</div></div>
                     </div>
-                    <h2>The Problem</h2>
-                    <p>Enterprise users were abandoning the GenAI tool (60% drop-off) because they found raw AI outputs difficult to refine. They suffered from 'Blank Page Syndrome'—lacking the specific prompt engineering skills needed to get quality results, leading to frustration.</p>
-                    
-                    <h2>Our Approach</h2>
-                    <p>We pivoted from a text-heavy command line interface to a <strong>'Visual Tuner' GUI</strong>. The goal was to democratize prompt engineering by mapping complex parameters to simple UI controls.</p>
-                    
-                    <h3>Key Features</h3>
-                    <ul>
-                        <li><strong>Prompt Recipes:</strong> A side-panel library of pre-built, verified prompt structures for common use cases (e.g., "Summarize Meeting", "Generate SQL").</li>
-                        <li><strong>Visual Sliders:</strong> Mapped complex parameters (Temperature, Token Limit) to user-friendly sliders like 'Creativity' and 'Length'.</li>
-                        <li><strong>Compare Mode:</strong> A split-screen view allowing users to see version A vs. B of an output side-by-side to verify improvements.</li>
-                    </ul>
+
+                    <h2>Overview</h2>
+                    <p>The Vendor Sustainability Portal is a compliance-driven application where vendors are required to complete a detailed sustainability assessment consisting of 400+ questions grouped into sections and sub-sections.</p>
+                    <p>Customers frequently reported frustration, long completion times, and fatigue while completing the assessment. I was asked to review the existing experience, identify usability gaps, and propose improvements to make task completion easier without changing compliance requirements.</p>
 
                     <hr>
 
-                    <h2>Outcome</h2>
-                    <p>The redesign transformed the tool from a "developer-only" utility to a company-wide asset.</p>
-                    <blockquote>"Reduced average workflow clicks by 40% and improved user satisfaction scores (CSAT) by 25% within the first month."</blockquote>
+                    <h2>Problem Statement</h2>
+                    <p>Although the assessment structure was logically grouped, the experience created high cognitive load and inefficiency:</p>
+                    <ul>
+                        <li><strong>Weight:</strong> All questions felt equally heavy, regardless of importance.</li>
+                        <li><strong>Context Switching:</strong> Users had to repeatedly switch between documents and the application.</li>
+                        <li><strong>Ambiguity:</strong> No clarity on which questions required documents vs human input.</li>
+                        <li><strong>Navigation:</strong> Excessive navigation through sections increased perceived effort.</li>
+                    </ul>
+                    <p>The workflow optimized for data entry, not task completion. This resulted in poor user experience for a mandatory, non-negotiable process.</p>
+
+                    <h2>Approach</h2>
+                    <p>Instead of starting with screens or components, I approached the problem as a <strong>first-time vendor</strong> trying to complete the assessment as efficiently as possible.</p>
+                    <p>I intentionally optimized for minimum user effort, focusing on:</p>
+                    <ul>
+                        <li>Reducing redundant actions</li>
+                        <li>Minimizing context switching</li>
+                        <li>Shifting effort from manual input to review and validation</li>
+                    </ul>
+
+                    <h3>Key Insights</h3>
+                    <ol>
+                        <li>Users do not think in sections — they think in “how do I finish this faster?”</li>
+                        <li>Most answers already exist in company documents.</li>
+                        <li>The biggest friction was manual data entry, not question complexity.</li>
+                        <li>Compliance workflows need trust and transparency, not blind automation.</li>
+                    </ol>
+
+                    <hr>
+
+                    <h2>Design Solutions</h2>
+
+                    <h3>1. Mandatory vs Optional Question Prioritization</h3>
+                    <p>Rather than removing sections, I re-prioritized questions based on completion criticality. Mandatory questions surfaced first, while optional questions remained accessible but de-emphasized. This reduced unnecessary navigation and improved perceived progress.</p>
+                    
+                    <!-- SNAP PLACEHOLDER 1 -->
+                    <div class="img-placeholder">
+                        src="assets/images/Mandatory vs Optional Split.png"
+                        alt="Prioritization UI: Mandatory vs Optional Split"
+                    </div>
+
+                    <h3>2. Agentic Document-Based Answer Extraction</h3>
+                    <p>To eliminate repetitive manual work, I introduced an agentic workflow:</p>
+                    <ul>
+                        <li>Users upload relevant documents.</li>
+                        <li>The system extracts answers automatically.</li>
+                        <li>Each answer shows its source reference.</li>
+                        <li>Users review, edit, and approve before submission.</li>
+                    </ul>
+                    <p>This shifted the user’s role from <strong>answering</strong> to <strong>validating</strong>.</p>
+
+                    <!-- SNAP PLACEHOLDER 2 -->
+                    <div class="img-placeholder">
+                        src="assets/images/Document Extraction & Review.png"
+                        alt="Agentic Workflow: Document Extraction & Review"
+                    </div>
+
+                    <h3>3. Smart Document Intake</h3>
+                    <p>Instead of uploading documents repeatedly per question, I identified document types needed across the assessment and enabled <strong>bulk document upload upfront</strong>. Extracted information is then reused across multiple questions, significantly reducing context switching.</p>
+
+                    <!-- SNAP PLACEHOLDER 3 -->
+                    <div class="img-placeholder">
+                        src="assets/images/Bulk Upload & Smart Intake Interface.png"
+                        alt="Bulk Upload & Smart Intake Interface"
+                    </div>
+
+                    <h3>4. AI Assistance for Judgment-Based Questions</h3>
+                    <p>Not all questions could be answered via documents. For such cases, AI guidance explains what information is expected and helps users understand <em>how</em> to answer, without auto-filling judgment-based responses. This preserved user control and accountability.</p>
+
+                    <!-- SNAP PLACEHOLDER 4 -->
+                    <div class="img-placeholder">
+                        src="assets/images/AI Guidance for Subjective Questions.png"
+                        alt="AI Guidance for Subjective Questions"
+                    </div>
+
+                    <hr>
+
+                    <h2>Final Experience</h2>
+                    <p>By the end of the redesigned flow, users focus on reviewing system-generated responses. Manual typing is minimized, cognitive load is reduced, and trust is maintained through transparency and review. The assessment becomes a guided validation process rather than a manual questionnaire.</p>
+
+                    <h2>Impact</h2>
+                    <ul>
+                        <li>Reduced task completion effort and perceived fatigue.</li>
+                        <li>Faster assessment completion.</li>
+                        <li>Fewer user complaints around usability.</li>
+                        <li>Improved confidence in data accuracy.</li>
+                    </ul>
+
+                    <h2>Trade-offs & Considerations</h2>
+                    <ul>
+                        <li>Full automation was intentionally avoided to prioritize human-in-the-loop review.</li>
+                        <li>Compliance and trust were treated as core UX requirements.</li>
+                    </ul>
+
+                    <h2>Learnings</h2>
+                    <p>UX impact doesn’t always come from visual redesign. Workflow and effort reduction matter more in mandatory systems. AI delivers value when paired with clear user control.</p>
                 `,
-                link: null
+                link: null 
             },
             'fieldofficer': {
                 title: "Field Officer Companion App (POC)",
@@ -1011,7 +1153,7 @@
                         <li><strong>Progressive Disclosure:</strong> Hiding technical complexity until needed.</li>
                         <li><strong>Human-readable Mapping:</strong> Converting raw JSON parameters into user-friendly form fields.</li>
                         <li><strong>Multi-layer Validation:</strong> Real-time JSON syntax validation plus structural checks against supported patterns.</li>
-                        <li><strong>Test-before-publish:</strong> A mandatory sandbox environment to build confidence.</li>
+                        <li><strong>Inline Testing:</strong> A built-in testing layout that allows users to run the action immediately within the screen context, ensuring it works before publishing without context switching.</li>
                     </ul>
 
                     <h3>JSON Validation as a UX Problem</h3>
@@ -1106,23 +1248,23 @@
             const confidentialText = document.getElementById('modal-confidential-text');
             const externalLinkBtn = document.getElementById('modal-external-link');
 
-            if (project.link) {
-                // External Article
-                confidentialText.style.display = 'none';
+            // Custom Button Logic
+            if (project.ctaText) {
+                // For Sustainability Project (or others with custom CTA)
+                externalLinkBtn.style.display = 'inline-flex';
+                externalLinkBtn.href = project.link || "#";
+                externalLinkBtn.innerHTML = `${project.ctaText} <i class="fa-solid fa-arrow-up-right-from-square"></i>`;
+            } else if (project.link) {
+                // Standard Article (Medium)
                 externalLinkBtn.style.display = 'inline-flex';
                 externalLinkBtn.href = project.link;
-                
-                // Update "Read on Medium" text if needed (e.g. if we add different external link types later)
-                // For now hardcoded in HTML as "Read on Medium"
-                
+                externalLinkBtn.innerHTML = `Read on Medium <i class="fa-solid fa-arrow-up-right-from-square"></i>`;
             } else {
-                // Internal Project
-                confidentialText.style.display = 'block';
+                // Standard Internal Project
                 externalLinkBtn.style.display = 'none';
             }
 
-            // Always "Next Project" functionality on the right button
-            modalActionBtn.innerHTML = 'Next Project <i class="fa-solid fa-arrow-right"></i>';
+            modalActionBtn.innerHTML = 'Next Project <i class="fa-solid fa-arrow-right ml-2"></i>';
             modalActionBtn.href = "#";
             modalActionBtn.target = "";
             modalActionBtn.onclick = (e) => {
@@ -1168,4 +1310,4 @@
         }
     </script>
 </body>
-</html>
+</html>F
