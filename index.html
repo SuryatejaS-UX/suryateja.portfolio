@@ -300,45 +300,26 @@
         }
 
         /* Image Placeholder in Modal */
-.img-placeholder {
-  width: 100%;
-  height: 16rem; /* h-64 */
-  background-color: var(--modal-placeholder-bg);
-  border: 1px dashed var(--modal-placeholder-border);
-  border-radius: 0.75rem; /* rounded-xl */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-tertiary);
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-  overflow: hidden;
-
-  /* SAFE transitions only */
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    transform 0.3s ease;
-}
-
-/* Hover state */
-.img-placeholder:hover {
-  border-color: var(--text-secondary);
-  background-color: var(--icon-bg);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  transform: translateY(-2px);
-}
-
-/* Image inside placeholder */
-.img-placeholder img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* change to cover if needed */
-  display: block;
-  transition: opacity 0.3s ease;
-}
+        .img-placeholder {
+            width: 100%;
+            height: 16rem; /* h-64 */
+            background-color: var(--modal-placeholder-bg);
+            border: 1px dashed var(--modal-placeholder-border);
+            border-radius: 0.75rem; /* rounded-xl */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-tertiary);
+            margin-bottom: 2rem;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            cursor: zoom-in; /* Indicate interactivity */
+        }
+        .img-placeholder:hover {
+            border-color: var(--text-secondary);
+            background-color: var(--icon-bg);
+        }
         .img-placeholder i {
             font-size: 2rem;
             margin-bottom: 0.5rem;
@@ -347,6 +328,20 @@
         .img-placeholder span {
             font-size: 0.875rem;
             font-weight: 500;
+        }
+
+        /* Lightbox Overlay */
+        #lightbox {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #lightbox img, #lightbox .img-placeholder {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
         /* Meta Data Grid in Modal */
@@ -426,20 +421,21 @@
             position: relative; /* Keeps it in flow */
         }
         
-        /* Modal States */
+        /* Modal States - FULL SCREEN OVERRIDE */
         .modal-open { opacity: 1 !important; pointer-events: auto !important; }
+        
         .modal-content-container {
-            transform: translateY(100%); opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
+            /* Initial State: Hidden and scaled down */
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        @media (min-width: 768px) {
-            .modal-content-container {
-                transform: scale(0.95);
-                opacity: 0;
-                transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
-            }
+        
+        .modal-open .modal-content-container {
+            /* Open State: Full opacity and natural scale */
+            opacity: 1;
+            transform: scale(1);
         }
-        .modal-open .modal-content-container { transform: translateY(0) scale(1); opacity: 1; }
     </style>
 </head>
 <body class="antialiased min-h-screen p-4 md:p-8 flex justify-center">
@@ -541,7 +537,7 @@
         <!-- PROJECT GRID SECTION -->
         
         <!-- 4. Featured Case Study: Sustainability -->
-        <div onclick="openProject('sustainability')" class="animate-enter delay-300 cursor-pointer bento-card rounded-3xl p-0 col-span-1 md:col-span-2 row-span-2 group block relative overflow-hidden">
+        <div onclick="openProject('sustainability', this)" class="animate-enter delay-300 cursor-pointer bento-card rounded-3xl p-0 col-span-1 md:col-span-2 row-span-2 group block relative overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent z-10"></div>
             <div class="absolute inset-0 bg-gray-800 z-0">
                  <svg class="w-full h-full opacity-20 group-hover:opacity-30 transition-opacity duration-500" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -575,7 +571,7 @@
         </div>
 
         <!-- 4b. Field Officer App POC -->
-        <div onclick="openProject('fieldofficer')" class="animate-enter delay-400 cursor-pointer bento-card rounded-3xl p-6 col-span-1 md:col-span-1 group block flex flex-col justify-between">
+        <div onclick="openProject('fieldofficer', this)" class="animate-enter delay-400 cursor-pointer bento-card rounded-3xl p-6 col-span-1 md:col-span-1 group block flex flex-col justify-between">
             <div class="flex items-start justify-between">
                 <div>
                     <div class="w-10 h-10 rounded-full bg-green-900/50 flex items-center justify-center mb-4 text-green-400 font-bold">
@@ -592,7 +588,7 @@
         </div>
 
         <!-- 4c. API Registration -->
-        <div onclick="openProject('apiregistration')" class="animate-enter delay-400 cursor-pointer bento-card rounded-3xl p-6 col-span-1 md:col-span-1 group block flex flex-col justify-between">
+        <div onclick="openProject('apiregistration', this)" class="animate-enter delay-400 cursor-pointer bento-card rounded-3xl p-6 col-span-1 md:col-span-1 group block flex flex-col justify-between">
             <div class="flex items-start justify-between">
                 <div>
                     <div class="w-10 h-10 rounded-full bg-pink-900/50 flex items-center justify-center mb-4 text-pink-400 font-bold">
@@ -609,7 +605,7 @@
         </div>
 
         <!-- 4d. Micro Usability -->
-        <div onclick="openProject('microusability')" class="animate-enter delay-500 cursor-pointer bento-card rounded-3xl p-6 col-span-1 md:col-span-1 group block flex flex-col justify-between relative overflow-hidden">
+        <div onclick="openProject('microusability', this)" class="animate-enter delay-500 cursor-pointer bento-card rounded-3xl p-6 col-span-1 md:col-span-1 group block flex flex-col justify-between relative overflow-hidden">
             <i class="fa-brands fa-medium absolute -right-4 -top-4 text-8xl text-white opacity-5 pointer-events-none"></i>
             <div class="flex items-start justify-between">
                 <div>
@@ -627,8 +623,8 @@
             </div>
         </div>
 
-        <!-- 4e. Custom Action Creator -->
-        <div onclick="openProject('customaction')" class="animate-enter delay-500 cursor-pointer bento-card rounded-3xl p-6 col-span-1 md:col-span-1 group block flex flex-col justify-between">
+        <!-- 4e. Case Study: Custom Action Creator (DISABLED INTERACTION) -->
+        <div class="animate-enter delay-500 cursor-default bento-card rounded-3xl p-6 col-span-1 md:col-span-1 group block flex flex-col justify-between relative overflow-hidden opacity-90">
             <div class="flex items-start justify-between">
                 <div>
                     <div class="w-10 h-10 rounded-full bg-indigo-900/50 flex items-center justify-center mb-4 text-indigo-400 font-bold">
@@ -637,7 +633,7 @@
                     <h3 class="text-lg font-bold text-white mb-2">Custom Actions</h3>
                     <p class="text-sm text-gray-400">Safe JSON configuration for non-devs.</p>
                 </div>
-                <div class="bg-gray-800 text-gray-400 text-[10px] px-2 py-1 rounded border border-gray-700">Internal Tool <i class="fa-solid fa-lock text-[8px] ml-1"></i></div>
+                <div class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 text-[10px] px-2 py-1 rounded font-bold uppercase tracking-wide">Coming Soon</div>
             </div>
             <div class="mt-4 pt-4 border-t border-gray-800">
                 <p class="text-indigo-400 font-bold text-sm">Zero Runtime Errors</p>
@@ -657,17 +653,9 @@
                         <h3 class="text-white font-bold text-lg">UX Designer</h3>
                         <span class="text-sm text-gray-500 font-mono">2022 – Present</span>
                     </div>
-<p class="text-blue-400 text-sm font-medium mb-2">
-    Tata Consultancy Services (TCS)
-</p>
-
-<ul class="text-gray-400 text-sm list-disc list-inside space-y-1">
-    <li>Designed scalable UX and UI solutions for enterprise applications.</li>
-    <li>Translated complex requirements into intuitive user flows and interfaces.</li>
-    <li>Worked cross-functionally in Agile teams to deliver user-centric products.</li>
-</ul>
-</div>
-
+                    <p class="text-blue-400 text-sm font-medium mb-2">Tata Consultancy Services (TCS)</p>
+                    <p class="text-gray-400 text-sm">Leading design for GenAI initiatives. Improved output refinement workflows and established core design patterns for banking clients.</p>
+                </div>
                 <!-- Role 2 -->
                 <div class="relative">
                     <div class="absolute -left-[29px] top-1 w-4 h-4 rounded-full bg-gray-600 border-4 border-gray-800"></div>
@@ -676,7 +664,7 @@
                         <span class="text-sm text-gray-500 font-mono">2021</span>
                     </div>
                     <p class="text-gray-500 text-sm font-medium mb-2">Greeniiac</p>
-                    <p class="text-gray-400 text-sm">Visualized concepts and created illustrations for digital magazines.</p>
+                    <p class="text-gray-400 text-sm">Visualized concepts and created illustrations for digital campaigns.</p>
                 </div>
             </div>
         </div>
@@ -688,9 +676,10 @@
                 <h2 class="text-xl font-bold text-gray-200">Testimonials</h2>
             </div>
             <div class="relative min-h-[350px] md:min-h-[260px] testimonial-wrapper">
+                <!-- Testimonial 1 -->
                 <div id="t-1" class="testimonial-slide active flex flex-col justify-center h-full">
                     <blockquote class="text-gray-400 italic text-base md:text-lg leading-relaxed mb-6">
-                        "I've worked with Surya and found him to be a reliable and thoughtful designer. He approaches design with curiosity, takes feedback positively, and consistently delivers well-considered solutions. Surya collaborates well with teams and shows strong ownership in his work."
+                        "I've worked with Surya and found him to be a reliable and thoughtful designer. He approaches design with curiosity, takes feedback positively, and consistently delivers well-considered solutions. Surya collaborates well with teams and shows strong ownership in his work. I'm confident he'll continue to grow and add value wherever he works."
                     </blockquote>
                     <div class="flex items-center gap-3">
                         <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-xs font-bold text-white shrink-0">AB</div>
@@ -700,37 +689,18 @@
                         </div>
                     </div>
                 </div>
-                <!-- ... other testimonials ... -->
-                <!-- ... <div id="t-2" class="testimonial-slide flex flex-col justify-center h-full">
-                    <blockquote class="text-gray-400 italic text-base md:text-lg leading-relaxed mb-6">
-                        "The design system Surya built unified our fragmented products. He thinks in systems, not just screens."
-                    </blockquote>
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-xs font-bold text-white shrink-0">AB</div>
-                        <div>
-                            <div class="text-white font-semibold text-sm">Anirban Bhattacharya</div>
-                            <div class="text-blue-400 text-xs">Manager</div>
-                        </div>
-                    </div>
-                </div>
-                <div id="t-3" class="testimonial-slide flex flex-col justify-center h-full">
-                    <blockquote class="text-gray-400 italic text-base md:text-lg leading-relaxed mb-6">
-                        "Incredibly detail-oriented. He spotted usability issues in our claims portal that our entire team had missed."
-                    </blockquote>
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-xs font-bold text-white shrink-0">SJ</div>
-                        <div>
-                            <div class="text-white font-semibold text-sm">Sarah Jenkins</div>
-                            <div class="text-blue-400 text-xs">Client, Banking</div>
-                        </div>
-                    </div>
-                </div> ... -->
+                
+                <!-- FUTURE TESTIMONIALS: Add new slides here with id="t-2", "t-3" etc. and remove the 'active' class -->
+                
             </div>
+            
+            <!-- Dots Navigation (Hidden for single testimonial) -->
+            <!-- 
             <div class="flex gap-2 mt-4 z-10 relative">
                 <button onclick="showTestimonial(1)" class="w-2 h-2 rounded-full dot-active transition-opacity" id="dot-1"></button>
                 <button onclick="showTestimonial(2)" class="w-2 h-2 rounded-full dot-inactive hover:opacity-75 transition-opacity" id="dot-2"></button>
-                <button onclick="showTestimonial(3)" class="w-2 h-2 rounded-full dot-inactive hover:opacity-75 transition-opacity" id="dot-3"></button>
-            </div>
+            </div> 
+            -->
         </div>
 
         <!-- 7a. Certifications -->
@@ -773,9 +743,9 @@
                         <span class="text-sm text-gray-500 font-mono">2018 – 2021</span>
                     </div>
                     <p class="text-gray-400 text-sm mb-2">JNTU Hyderabad</p>
-                    <!-- p class="text-xs text-gray-500 leading-relaxed">
+                    <p class="text-xs text-gray-500 leading-relaxed">
                         Foundation in systems thinking and structural design principles.
-                    </p> -->
+                    </p>
                 </div>
                 <div class="relative">
                     <div class="absolute -left-[29px] top-1 w-4 h-4 rounded-full bg-gray-600 border-4 border-gray-800"></div>
@@ -784,9 +754,9 @@
                         <span class="text-sm text-gray-500 font-mono">2015 – 2018</span>
                     </div>
                     <p class="text-gray-500 text-sm mb-2">SBTET</p>
-                    <!-- <p class="text-xs text-gray-500 leading-relaxed">
+                    <p class="text-xs text-gray-500 leading-relaxed">
                         Technical education focused on engineering fundamentals and drafting.
-                    </p> -->
+                    </p>
                 </div>
             </div>
         </div>
@@ -825,13 +795,11 @@
 
     <!-- Project Modal -->
     <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-        <!-- Backdrop -->
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
         <!-- Content Container -->
-        <div class="relative modal-content-container bg-[#1c1c1e] w-full h-full md:h-auto md:max-h-[90vh] md:max-w-4xl md:rounded-3xl border-0 md:border border-gray-700 shadow-2xl flex flex-col group/modal rounded-none">
+        <div class="relative modal-content-container bg-[#1c1c1e] w-full h-full flex flex-col group/modal border-0 shadow-none rounded-none">
             
             <!-- Modal Header -->
-            <div class="flex justify-between items-start p-6 md:p-8 border-b border-gray-800 bg-[#1c1c1e] rounded-none md:rounded-t-3xl z-20 pt-12 md:pt-8 safe-area-inset-top">
+            <div class="flex justify-between items-start p-6 md:p-8 border-b border-gray-800 bg-[#1c1c1e] z-20 pt-12 md:pt-8 safe-area-inset-top shrink-0">
                 <div>
                      <div class="flex items-center gap-3 mb-3">
                         <span id="modal-tag" class="bg-blue-500/20 text-blue-300 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wide">Featured Project</span>
@@ -839,7 +807,7 @@
                      </div>
                      <h3 id="modal-title" class="text-2xl md:text-3xl font-bold text-white">Project Title</h3>
                 </div>
-                <button onclick="closeModal()" class="modal-close-btn w-10 h-10 rounded-full flex items-center justify-center transition-colors z-50">
+                <button onclick="closeModal()" class="modal-close-btn w-10 h-10 rounded-full flex items-center justify-center transition-colors z-50 hover:bg-gray-800">
                     <i class="fa-solid fa-xmark text-xl"></i>
                 </button>
             </div>
@@ -854,25 +822,45 @@
 
             <!-- Modal Body -->
             <div id="modal-body" class="overflow-y-auto p-6 md:p-8 space-y-8 flex-1 prose-content">
-                <div id="modal-content-area" class="case-study-content">
+                <div id="modal-content-area" class="case-study-content max-w-4xl mx-auto">
                     <!-- Dynamic Content Injected Here -->
                 </div>
             </div>
             
             <!-- Modal Footer -->
-            <div class="p-6 md:p-8 border-t border-gray-800 bg-[#1c1c1e] rounded-none md:rounded-b-3xl flex justify-between items-center pb-8 safe-area-inset-bottom">
-                 <!-- Removed Confidential Text as requested -->
-                 <span id="modal-confidential-text" class="hidden"></span>
-                 
-                 <!-- New External Link Button -->
-                 <a id="modal-external-link" href="#" target="_blank" class="hidden btn-outline px-6 py-2.5 rounded-full font-semibold text-sm items-center gap-2">
-                    Read on Medium <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                 </a>
+            <div class="p-6 md:p-8 border-t border-gray-800 bg-[#1c1c1e] flex flex-col md:flex-row justify-between items-center pb-8 safe-area-inset-bottom gap-4 md:gap-0 shrink-0">
+                 <!-- Context / External Links -->
+                 <div class="flex items-center gap-3 w-full md:w-auto justify-center md:justify-start">
+                     <!-- Removed Confidential Text as requested -->
+                     <span id="modal-confidential-text" class="hidden"></span>
+                     
+                     <!-- New External Link Button -->
+                     <a id="modal-external-link" href="#" target="_blank" class="hidden btn-outline px-6 py-2.5 rounded-full font-semibold text-sm items-center gap-2">
+                        Read on Medium <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                     </a>
+                 </div>
 
-                 <a id="modal-action-btn" href="#" class="ml-auto btn-primary px-6 py-2.5 rounded-full font-semibold inline-flex items-center gap-2 text-sm">
-                    Next Project <i class="fa-solid fa-arrow-right"></i>
-                 </a>
+                 <!-- Navigation -->
+                 <div class="flex items-center gap-3 w-full md:w-auto justify-center md:justify-end">
+                     <a id="modal-prev-btn" href="#" class="btn-secondary px-6 py-2.5 rounded-full font-semibold inline-flex items-center gap-2 text-sm">
+                        <i class="fa-solid fa-arrow-left"></i> Previous
+                     </a>
+
+                     <a id="modal-action-btn" href="#" class="btn-primary px-6 py-2.5 rounded-full font-semibold inline-flex items-center gap-2 text-sm">
+                        Next <span class="hidden sm:inline">Project</span> <i class="fa-solid fa-arrow-right"></i>
+                     </a>
+                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 md:p-12" onclick="closeLightbox()">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors">
+            <i class="fa-solid fa-xmark text-3xl"></i>
+        </button>
+        <div id="lightbox-content" class="relative max-w-full max-h-full flex items-center justify-center" onclick="event.stopPropagation()">
+            <!-- Content Injected Here -->
         </div>
     </div>
 
@@ -911,7 +899,7 @@
             'sustainability': {
                 title: "Vendor Sustainability Assessment Portal",
                 tag: "Sustainability / Workflow",
-                // --- ctaText: "View Demo", --- // Updated CTA Text
+                ctaText: "View Demo", // Updated CTA Text
                 link: "#", 
                 fullContent: `
                     <div class="meta-grid">
@@ -980,7 +968,8 @@
                     <p>This shifted the user’s role from <strong>answering</strong> to <strong>validating</strong>.</p>
 
                     <!-- SNAP PLACEHOLDER 2 -->
-                    <div class="img-placeholder">
+                    
+					<div class="img-placeholder">
                         <img
                             src="assets/Document-Extraction-&-Review.png"
                             alt="Agentic Workflow: Document Extraction & Review"
@@ -1031,7 +1020,38 @@
                     <h2>Learnings</h2>
                     <p>UX impact doesn’t always come from visual redesign. Workflow and effort reduction matter more in mandatory systems. AI delivers value when paired with clear user control.</p>
                 `,
-                link: null 
+                link: null // Will use custom link logic below if desired, currently null to hide external unless we want to show a dummy link
+            },
+            'genai': {
+                title: "Generative AI Design Tool",
+                tag: "Generative AI",
+                fullContent: `
+                    <div class="meta-grid">
+                        <div><span class="meta-label">Role</span><div class="meta-value">Lead Designer</div></div>
+                        <div><span class="meta-label">Context</span><div class="meta-value">Internal Tool</div></div>
+                        <div><span class="meta-label">Duration</span><div class="meta-value">4 Months</div></div>
+                        <div><span class="meta-label">Impact</span><div class="meta-value">-40% Clicks</div></div>
+                    </div>
+                    <h2>The Problem</h2>
+                    <p>Enterprise users were abandoning the GenAI tool (60% drop-off) because they found raw AI outputs difficult to refine. They suffered from 'Blank Page Syndrome'—lacking the specific prompt engineering skills needed to get quality results, leading to frustration.</p>
+                    
+                    <h2>Our Approach</h2>
+                    <p>We pivoted from a text-heavy command line interface to a <strong>'Visual Tuner' GUI</strong>. The goal was to democratize prompt engineering by mapping complex parameters to simple UI controls.</p>
+                    
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Prompt Recipes:</strong> A side-panel library of pre-built, verified prompt structures for common use cases (e.g., "Summarize Meeting", "Generate SQL").</li>
+                        <li><strong>Visual Sliders:</strong> Mapped complex parameters (Temperature, Token Limit) to user-friendly sliders like 'Creativity' and 'Length'.</li>
+                        <li><strong>Compare Mode:</strong> A split-screen view allowing users to see version A vs. B of an output side-by-side to verify improvements.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>Outcome</h2>
+                    <p>The redesign transformed the tool from a "developer-only" utility to a company-wide asset.</p>
+                    <blockquote>"Reduced average workflow clicks by 40% and improved user satisfaction scores (CSAT) by 25% within the first month."</blockquote>
+                `,
+                link: null
             },
             'fieldofficer': {
                 title: "Field Officer Companion App (POC)",
@@ -1209,24 +1229,33 @@
 
         // --- Testimonials Logic ---
         let currentSlide = 1;
-        const totalSlides = 1;
+        const totalSlides = 1; // Set to 1 since we only have Ankit's testimonial
         let slideInterval;
 
         function showTestimonial(slideIndex) {
+            // Logic only runs if we have multiple slides
+            if (totalSlides <= 1) return;
+
             clearInterval(slideInterval);
             slideInterval = setInterval(nextSlide, 5000);
             currentSlide = slideIndex;
             
             document.querySelectorAll('.testimonial-slide').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('[id^="dot-"]').forEach(el => {
-                el.classList.remove('dot-active');
-                el.classList.add('dot-inactive');
-            });
+            // Only toggle dots if they exist
+            const dots = document.querySelectorAll('[id^="dot-"]');
+            if (dots.length > 0) {
+                dots.forEach(el => {
+                    el.classList.remove('dot-active');
+                    el.classList.add('dot-inactive');
+                });
+                const activeDot = document.getElementById(`dot-${currentSlide}`);
+                if (activeDot) {
+                    activeDot.classList.remove('dot-inactive');
+                    activeDot.classList.add('dot-active');
+                }
+            }
 
             document.getElementById(`t-${currentSlide}`).classList.add('active');
-            const activeDot = document.getElementById(`dot-${currentSlide}`);
-            activeDot.classList.remove('dot-inactive');
-            activeDot.classList.add('dot-active');
         }
 
         function nextSlide() {
@@ -1235,23 +1264,91 @@
             showTestimonial(next);
         }
 
-        slideInterval = setInterval(nextSlide, 5000);
+        // Only start auto-play if we have more than 1 slide
+        if (totalSlides > 1) {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
 
         // --- Modal Logic ---
         const modal = document.getElementById('project-modal');
         const modalContent = modal.querySelector('.modal-content-container');
         const modalActionBtn = document.getElementById('modal-action-btn');
+        const modalPrevBtn = document.getElementById('modal-prev-btn');
 
-        function openProject(projectId) {
+        // --- Lightbox Logic ---
+        function openLightbox(element) {
+            const lightbox = document.getElementById('lightbox');
+            const content = document.getElementById('lightbox-content');
+            content.innerHTML = ''; // Clear previous
+
+            // Clone the element
+            const clone = element.cloneNode(true);
+            
+            // Adjust styles for expanded view
+            clone.style.width = 'auto';
+            clone.style.height = 'auto';
+            clone.style.maxWidth = '100%';
+            clone.style.maxHeight = '85vh';
+            clone.style.cursor = 'default';
+            clone.style.margin = '0';
+            
+            // Special handling for placeholder divs to make them look good expanded
+            if (clone.classList.contains('img-placeholder')) {
+                clone.style.width = '80vw';
+                clone.style.height = '60vh';
+                clone.style.backgroundColor = '#1c1c1e'; // Dark bg in lightbox
+                clone.style.border = '1px solid #374151';
+                
+                // Scale internal icon/text
+                const icon = clone.querySelector('i');
+                if(icon) { icon.style.fontSize = '4rem'; icon.style.marginBottom = '1rem'; }
+                const text = clone.querySelector('span');
+                if(text) { text.style.fontSize = '1.5rem'; }
+            }
+
+            content.appendChild(clone);
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Add Event Listener for Lightbox on Modal Content
+        document.getElementById('modal-content-area').addEventListener('click', function(e) {
+            // Check if clicked element is an image or placeholder
+            const target = e.target.closest('img') || e.target.closest('.img-placeholder');
+            if (target) {
+                openLightbox(target);
+            }
+        });
+
+        function openProject(projectId, cardElement) {
             currentProjectIndex = projectKeys.indexOf(projectId);
             renderProject(projects[projectId]);
+            
+            // Reset scroll position to top
+            const body = document.getElementById('modal-body');
+            if(body) body.scrollTop = 0;
             
             modal.classList.remove('opacity-0', 'pointer-events-none');
             modal.classList.add('modal-open');
             document.body.style.overflow = 'hidden';
             
             // Hide theme toggle when modal is open to prevent overlap on mobile
-            document.querySelector('.theme-toggle').style.display = 'none';
+            const themeToggle = document.querySelector('.theme-toggle');
+            if(themeToggle) themeToggle.style.display = 'none';
+
+            // Animation Logic (Desktop only)
+            if (window.innerWidth >= 768 && cardElement) {
+                const rect = cardElement.getBoundingClientRect();
+                // Calculate center of clicked card
+                const originX = rect.left + rect.width / 2;
+                const originY = rect.top + rect.height / 2;
+                modalContent.style.transformOrigin = `${originX}px ${originY}px`;
+            } else {
+                modalContent.style.transformOrigin = 'center center'; // Default/Mobile
+            }
         }
 
         function navigateProject(direction) {
@@ -1261,9 +1358,13 @@
 
             const nextProjectId = projectKeys[currentProjectIndex];
             const body = document.getElementById('modal-body');
+            
             body.style.opacity = '0';
             setTimeout(() => {
                 renderProject(projects[nextProjectId]);
+                // Reset scroll position to top
+                if(body) body.scrollTop = 0;
+                
                 body.style.opacity = '1';
             }, 200);
         }
@@ -1300,13 +1401,20 @@
                 externalLinkBtn.style.display = 'none';
             }
 
-            modalActionBtn.innerHTML = 'Next Project <i class="fa-solid fa-arrow-right ml-2"></i>';
+            modalActionBtn.innerHTML = 'Next <span class="hidden sm:inline">Project</span> <i class="fa-solid fa-arrow-right"></i>';
             modalActionBtn.href = "#";
             modalActionBtn.target = "";
             modalActionBtn.onclick = (e) => {
                 e.preventDefault();
                 navigateProject(1);
             };
+
+            if (modalPrevBtn) {
+                modalPrevBtn.onclick = (e) => {
+                    e.preventDefault();
+                    navigateProject(-1);
+                }
+            }
         }
 
         function closeModal() {
@@ -1315,12 +1423,19 @@
             document.body.style.overflow = 'auto';
             
             // Restore theme toggle visibility
-            document.querySelector('.theme-toggle').style.display = 'flex';
+            const themeToggle = document.querySelector('.theme-toggle');
+            if(themeToggle) themeToggle.style.display = 'flex';
         }
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-            if (modal.classList.contains('modal-open')) {
+            if (e.key === 'Escape') {
+                if (document.getElementById('lightbox').classList.contains('active')) {
+                    closeLightbox();
+                } else {
+                    closeModal();
+                }
+            }
+            if (modal.classList.contains('modal-open') && !document.getElementById('lightbox').classList.contains('active')) {
                 if (e.key === 'ArrowLeft') navigateProject(-1);
                 if (e.key === 'ArrowRight') navigateProject(1);
             }
@@ -1346,11 +1461,4 @@
         }
     </script>
 </body>
-</html>F
-
-
-
-
-
-
-
+</html>
